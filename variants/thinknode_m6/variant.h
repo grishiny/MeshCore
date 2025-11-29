@@ -22,6 +22,7 @@
 
 #define BATTERY_PIN             (28)
 #define ADC_MULTIPLIER          (1.75F)
+#define PIN_ADC_CTRL            (11)
 
 #define ADC_RESOLUTION          (12)
 #define BATTERY_SENSE_RES       (12)
@@ -76,12 +77,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Builtin buttons
 
-#define PIN_BUTTON1             (42)
+#define PIN_BUTTON1             (17)
 #define BUTTON_PIN              PIN_BUTTON1
 #define PIN_USER_BTN            BUTTON_PIN
-
-#define PIN_BUTTON2             (11)
-#define BUTTON_PIN2             PIN_BUTTON2
 
 #define EXTERNAL_FLASH_DEVICES MX25R1635F
 #define EXTERNAL_FLASH_USE_QSPI
@@ -96,13 +94,6 @@
 #define SX126X_RESET            (25)
 #define SX126X_DIO2_AS_RF_SWITCH
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
-
-////////////////////////////////////////////////////////////////////////////////
-// SPI1
-
-//#define PIN_SPI1_MISO           (38)
-//#define PIN_SPI1_MOSI           (29)
-//#define PIN_SPI1_SCK            (31)
 
 ////////////////////////////////////////////////////////////////////////////////
 // QSPI
@@ -122,4 +113,3 @@
 #define PIN_GPS_RESET           (29)
 #define PIN_GPS_PPS             (31)
 #define PIN_GPS_STANDBY         (30)
-//#define PIN_GPS_SWITCH          (33)

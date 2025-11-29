@@ -37,12 +37,14 @@ void ThinkNodeM6Board::begin() {
 uint16_t ThinkNodeM6Board::getBattMilliVolts() {
   int adcvalue = 0;
 
+  digitalWrite(PIN_ADC_CTRL, HIGH);
   analogReference(AR_INTERNAL_3_0);
   analogReadResolution(12);
   delay(10);
 
   // ADC range is 0..3000mV and resolution is 12-bit (0..4095)
   adcvalue = analogRead(PIN_VBAT_READ);
+  digitalWrite(PIN_ADC_CTRL, LOW);
   // Convert the raw value to compensated mv, taking the resistor-
   // divider into account (providing the actual LIPO voltage)
   return (uint16_t)((float)adcvalue * REAL_VBAT_MV_PER_LSB);

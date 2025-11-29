@@ -13,16 +13,14 @@ void initVariant() {
   pinMode(PIN_PWR_EN, OUTPUT);
   digitalWrite(PIN_PWR_EN, HIGH);
 
-//  pinMode(PIN_BUTTON1, INPUT_PULLUP);
-//  pinMode(PIN_BUTTON2, INPUT_PULLUP);
+  // For now stick adc_ctrl to fixed value
+  pinMode(PIN_ADC_CTRL, OUTPUT);
+  digitalWrite(PIN_ADC_CTRL, LOW);
 
-  // pinMode(LED_RED, OUTPUT);
-  // pinMode(LED_GREEN, OUTPUT);
-  // pinMode(LED_BLUE, OUTPUT);
-  // digitalWrite(LED_BLUE, HIGH);
-
-  // pinMode(PIN_TXCO, OUTPUT);
-  // digitalWrite(PIN_TXCO, HIGH);
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_GREEN, OUTPUT);
+  digitalWrite(LED_GREEN, LOW);
+  digitalWrite(LED_RED, LOW);
 
   // // shutdown gps
   pinMode(PIN_GPS_STANDBY, OUTPUT);
