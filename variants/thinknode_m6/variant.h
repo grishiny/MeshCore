@@ -81,35 +81,28 @@
 #define BUTTON_PIN              PIN_BUTTON1
 #define PIN_USER_BTN            BUTTON_PIN
 
+////////////////////////////////////////////////////////////////////////////////
+// QSPI
+
 #define EXTERNAL_FLASH_DEVICES MX25R1635F
 #define EXTERNAL_FLASH_USE_QSPI
 
-////////////////////////////////////////////////////////////////////////////////
-// Lora
-
-#define USE_SX1262
-#define LORA_CS                 (24)
-#define SX126X_DIO1             (20)
-#define SX126X_BUSY             (17)
-#define SX126X_RESET            (25)
-#define SX126X_DIO2_AS_RF_SWITCH
-#define SX126X_DIO3_TCXO_VOLTAGE 1.8
-
-////////////////////////////////////////////////////////////////////////////////
-// QSPI
 #define PIN_QSPI_SCK (35)
 #define PIN_QSPI_CS  (23)
 #define PIN_QSPI_IO0 (33)  // MOSI if using two bit interface
 #define PIN_QSPI_IO1 (34)  // MISO if using two bit interface
 #define PIN_QSPI_IO2 (36)  // WP if using two bit interface (i.e. not used)
 #define PIN_QSPI_IO3 (37)  // HOLD if using two bit interface (i.e. not used)
+#define QSPI_FLASH_EN (21)
 
 ////////////////////////////////////////////////////////////////////////////////
 // GPS
 
+#define GPS_L76K
 #define PIN_GPS_RX              (2)
 #define PIN_GPS_TX              (3)
-#define GPS_EN                  (6)
+#define PIN_GPS_EN              (6)    // EN
 #define PIN_GPS_RESET           (29)
+#define PIN_GPS_STANDBY         (30)   // STANDBY
 #define PIN_GPS_PPS             (31)
-#define PIN_GPS_STANDBY         (30)
+#define GPS_BAUD_RATE           9600

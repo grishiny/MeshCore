@@ -11,8 +11,12 @@ WRAPPER_CLASS radio_driver(radio, board);
 
 VolatileRTCClock fallback_clock;
 AutoDiscoverRTCClock rtc_clock(fallback_clock);
-MicroNMEALocationProvider nmea = MicroNMEALocationProvider(Serial1);
-ThinkNodeM6SensorManager sensors = ThinkNodeM6SensorManager(nmea);
+#ifdef ENV_INCLUDE_GPS
+MicroNMEALocationProvider nmea = MicroNMEALocationProvider(Serial1, &rtc_clock);
+EnvironmentSensorManager sensors = EnvironmentSensorManager(nmea);
+#else
+EnvironmentSensorManager sensors = EnvironmentSensorManager();
+#endif
 
 #ifdef DISPLAY_CLASS
   DISPLAY_CLASS display;
@@ -42,85 +46,4 @@ void radio_set_tx_power(uint8_t dbm) {
 mesh::LocalIdentity radio_new_identity() {
   RadioNoiseListener rng(radio);
   return mesh::LocalIdentity(&rng);  // create new random identity
-}
-
-void ThinkNodeM6SensorManager::start_gps() {
-  if (!gps_active) {
-    gps_active = true;
-    _location->begin();
-  }
-}
-
-void ThinkNodeM6SensorManager::stop_gps() {
-  if (gps_active) {
-    gps_active = false;
-    _location->stop();
-  }
-}
-
-bool ThinkNodeM6SensorManager::begin() {
-  Serial1.begin(9600);
-
-  // Initialize GPS power pin
-  pinMode(GPS_EN, OUTPUT);
-
-  // Check initial switch state to determine if GPS should be active
-  start_gps();
-
-  return true;
-}
-
-bool ThinkNodeM6SensorManager::querySensors(uint8_t requester_permissions, CayenneLPP& telemetry) {
-  if (requester_permissions & TELEM_PERM_LOCATION) {   // does requester have permission?
-    telemetry.addGPS(TELEM_CHANNEL_SELF, node_lat, node_lon, node_altitude);
-  }
-  return true;
-}
-
-void ThinkNodeM6SensorManager::loop() {
-  static long next_gps_update = 0;
-  static long last_switch_check = 0;
-
-  if (!gps_active) {
-    return;  // GPS is not active, skip further processing
-  }
-
-  _location->loop();
-
-  if (millis() > next_gps_update) {
-    if (_location->isValid()) {
-      node_lat = ((double)_location->getLatitude())/1000000.;
-      node_lon = ((double)_location->getLongitude())/1000000.;
-      node_altitude = ((double)_location->getAltitude()) / 1000.0;
-      MESH_DEBUG_PRINTLN("lat %f lon %f", node_lat, node_lon);
-    }
-    next_gps_update = millis() + 1000;
-  }
-}
-
-int ThinkNodeM6SensorManager::getNumSettings() const {
-  return 1;  // always show GPS setting
-}
-
-const char* ThinkNodeM6SensorManager::getSettingName(int i) const {
-  return (i == 0) ? "gps" : NULL;
-}
-
-const char* ThinkNodeM6SensorManager::getSettingValue(int i) const {
-  if (i == 0) {
-    return gps_active ? "1" : "0";
-  }
-  return NULL;
-}
-
-bool ThinkNodeM6SensorManager::setSettingValue(const char* name, const char* value) {
-  if (strcmp(name, "gps") == 0) {
-    if (strcmp(value, "0") == 0) {
-      stop_gps();
-    } else {
-      start_gps();
-    }
-    return true;
-  }
-  return false;  // not supported
 }

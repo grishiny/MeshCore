@@ -13,6 +13,9 @@ void initVariant() {
   pinMode(PIN_PWR_EN, OUTPUT);
   digitalWrite(PIN_PWR_EN, HIGH);
 
+  pinMode(QSPI_FLASH_EN, OUTPUT);
+  digitalWrite(QSPI_FLASH_EN, HIGH);
+
   // For now stick adc_ctrl to fixed value
   pinMode(PIN_ADC_CTRL, OUTPUT);
   digitalWrite(PIN_ADC_CTRL, LOW);
@@ -22,7 +25,11 @@ void initVariant() {
   digitalWrite(PIN_LED_BLUE, LOW);
   digitalWrite(PIN_LED_RED, LOW);
 
-  // // shutdown gps
+  // gps
   pinMode(PIN_GPS_STANDBY, OUTPUT);
-  digitalWrite(PIN_GPS_STANDBY, LOW);
+  digitalWrite(PIN_GPS_STANDBY, HIGH);
+  pinMode(PIN_GPS_EN, OUTPUT);
+  digitalWrite(PIN_GPS_EN, HIGH);
+  pinMode(PIN_GPS_RESET, OUTPUT);
+  digitalWrite(PIN_GPS_RESET, HIGH);
 }
